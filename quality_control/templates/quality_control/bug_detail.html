@@ -1,0 +1,13 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <h1>Название бага: {{ bug.title }}</h1>
+    <h3>Описание:</h3>
+    {{ bug.description }}
+    <h3>Статус</h3>
+    {{ bug.status }}
+    <h3>Связанное задание:</h3>
+    <a href="../../../tasks/projects/{{ bug.project.id }}/tasks/{{ bug.task.id }}">{{ bug.task }}</a>
+    <h3>Связанный проект:</h3>
+    <a href="../../../tasks/projects/{{ bug.project.id }}">{{ bug.project }}</a>
+{% endblock %}

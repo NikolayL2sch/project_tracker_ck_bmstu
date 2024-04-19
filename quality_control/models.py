@@ -17,6 +17,9 @@ class BugReport(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.title
+
 
 class FeatureRequest(models.Model):
     STATUS_CHOICES = [('Pending', 'Рассмотрение'),
@@ -30,3 +33,6 @@ class FeatureRequest(models.Model):
     priority = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title

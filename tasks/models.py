@@ -14,7 +14,7 @@ class Project(models.Model):
 class Task(models.Model):
     STATUS_CHOICES = [('New', 'Новая'),
                       ('In progress', 'В работе'),
-                      ('Completed', 'Завершена'),]
+                      ('Completed', 'Завершена'), ]
     project = models.ForeignKey(Project,
                                 related_name='tasks',
                                 on_delete=models.CASCADE)
