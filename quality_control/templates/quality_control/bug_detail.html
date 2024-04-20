@@ -2,6 +2,7 @@
 
 {% block content %}
     <p><a href="{% url 'quality_control:update_bug_report' bug.id %}">Изменить отчет о баге</a></p>
+    <p><a href="{% url 'quality_control:delete_bug' bug.id %}"onclick="return confirm('Вы уверены, что хотите удалить этот отчет о баге?');">Удалить отчет</a></p>
     <h1>Название бага: {{ bug.title }}</h1>
     <h3>Описание:</h3>
     {{ bug.description }}
