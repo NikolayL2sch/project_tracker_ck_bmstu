@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
+    <p><a href="{% url 'quality_control:update_feature_request' feature.id %}">Изменить запрос об улучшении</a></p>
     <h1>{{ feature.title }}</h1>
     <h3>Описание:</h3>
     {{ feature.description }}

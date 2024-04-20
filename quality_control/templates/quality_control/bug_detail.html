@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
+    <p><a href="{% url 'quality_control:update_bug_report' bug.id %}">Изменить отчет о баге</a></p>
     <h1>Название бага: {{ bug.title }}</h1>
     <h3>Описание:</h3>
     {{ bug.description }}

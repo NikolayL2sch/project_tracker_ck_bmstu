@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
+    <p><a href="{% url 'quality_control:add_feature' %}">Создать новое улучшение</a></p>
     <h1>Список улучшений</h1>
     <ul>
         {% for feature in feature_list %}

@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
+    <p><a href="{% url 'quality_control:create_bug_report' %}">Создать новый отчет о баге</a></p>
     <h1>Список багов</h1>
     <ul>
         {% for bug in bug_list %}

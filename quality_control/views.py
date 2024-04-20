@@ -1,8 +1,11 @@
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, CreateView
 
+from tasks.models import Project, Task
+from .forms import BugReportForm, FeatureRequestForm
 from .models import BugReport, FeatureRequest
 
 
@@ -59,3 +62,65 @@ def bug_detail(request, bug_id):
 def feature_detail(request, feature_id):
     feature = get_object_or_404(FeatureRequest, id=feature_id)
     return render(request, 'quality_control/feature_detail.html', {'feature': feature})
+
+
+def create_bug_report(request):
+    if request.method == 'POST':
+        form = BugReportForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('quality_control:bug_list')
+    else:
+        form = BugReportForm()
+    return render(request, 'quality_control/bug_report_form.html', {'form': form})
+
+
+def create_feature_request(request):
+    if request.method == 'POST':
+        form = FeatureRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('quality_control:feature_list')
+    else:
+        form = FeatureRequestForm()
+    return render(request, 'quality_control/feature_request_form.html', {'form': form})
+
+
+class BugReportCreateView(CreateView):
+    model = BugReport
+    form_class = BugReportForm
+    template_name = 'quality_control/bug_create.html'
+    success_url = reverse_lazy('quality_control:bug_list')
+
+
+class FeatureRequestCreateView(CreateView):
+    model = FeatureRequest
+    form_class = FeatureRequestForm
+    template_name = 'quality_control/feature_create.html'
+    success_url = reverse_lazy('quality_control:feature_list')
+
+
+def update_bug_report(request, bug_id):
+    bug = get_object_or_404(BugReport, id=bug_id)
+    if request.method == 'POST':
+        form = BugReportForm(request.POST, instance=bug)
+        if form.is_valid():
+            form.save()
+            return redirect('quality_control:bug_detail', bug_id)
+
+    else:
+        form = BugReportForm(instance=bug)
+    return render(request, 'quality_control/bug_report_update.html', {'form': form, 'bug': bug})
+
+
+def update_feature_request(request, feature_id):
+    feature = get_object_or_404(FeatureRequest, id=feature_id)
+    if request.method == 'POST':
+        form = FeatureRequestForm(request.POST, instance=feature)
+        if form.is_valid():
+            form.save()
+            return redirect('quality_control:feature_detail', feature_id)
+
+    else:
+        form = FeatureRequestForm(instance=feature)
+    return render(request, 'quality_control/feature_request_update.html', {'form': form, 'feature': feature})
